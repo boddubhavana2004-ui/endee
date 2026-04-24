@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+import json
+
+raw_text = """Gas / Bloating: Feeling of fullness, stomach tightness, burping, passing gas, discomfort after meals. Often caused by overeating, spicy food, fizzy drinks, or indigestion. Mild cases may improve with light meals, walking, and avoiding trigger foods.
+
+Indigestion: Heaviness, burning in stomach, bloating, nausea, discomfort after eating oily or spicy food. Usually improves with light meals, avoiding triggers, and eating slowly.
+
+Acidity: Burning sensation in chest or throat, sour taste in mouth, burping, irritation after meals. May improve with antacids and avoiding spicy foods.
+
+Constipation: Hard stool, difficulty passing stool, straining, incomplete bowel movement, stomach pain. Often improves with more water, fiber, fruits, and exercise.
+
+Diarrhea: Loose or watery stools, stomach cramps, weakness, dehydration. Common causes include infection or bad food. Oral rehydration solution (ORS) is important.
+
+Vomiting: Nausea, throwing up, weakness, dehydration, stomach upset. Can happen due to infection, food poisoning, gastritis, or pregnancy.
+
+Nausea: Feeling like vomiting, dizziness, stomach discomfort, weakness, loss of appetite. Can occur due to motion sickness, indigestion, infection, or pregnancy.
+
+Food Poisoning: Vomiting, diarrhea, fever, stomach cramps, weakness after eating contaminated food or water. Hydration is very important.
+
+Dehydration: Dry mouth, less urine, dizziness, tiredness, weakness, headache. Usually caused by vomiting, diarrhea, fever, or low fluid intake. Increase fluids.
+
+Weakness: Low energy, tiredness, dizziness, poor stamina, body fatigue. Can happen due to illness, poor diet, dehydration, anemia, or stress.
+
+Fever: High body temperature, chills, sweating, weakness, body pain, headache, loss of appetite. Commonly caused by viral or bacterial infections. Mild fever may improve with rest, hydration, and Paracetamol.
+
+High Fever: Body temperature above 103°F (39.4°C), severe weakness, confusion, dehydration, seizures, rapid heartbeat. Requires urgent medical evaluation.
+
+Cold: Sneezing, runny nose, blocked nose, sore throat, cough, mild fever, watery eyes. Usually caused by viral infection and improves with rest.
+
+Cough: Dry cough, mucus cough, throat irritation, chest discomfort. Can be caused by infection, allergy, asthma, or smoking.
+
+Sore Throat: Pain or irritation while swallowing, dryness, redness, swollen tonsils, mild fever. Often due to viral infection or cold.
+
+Headache: Pain in head, pressure, nausea, light sensitivity, dizziness. Common causes include stress, dehydration, fever, or migraine.
+
+Migraine: Severe throbbing headache, nausea, vomiting, sensitivity to light and sound. May be triggered by stress, lack of sleep, or certain foods.
+
+Body Pain: Muscle aches, joint pain, tiredness, feverish feeling. Common in viral infections, overwork, dehydration, or stress.
+
+Back Pain: Pain in lower or upper back, stiffness, difficulty bending, muscle tightness. Often caused by poor posture or strain.
+
+Neck Pain: Stiffness, pain while turning head, muscle tightness, headache. Often due to poor posture or sleeping position.
+
+Allergy: Sneezing, itching, rash, watery eyes, swelling, runny nose. Triggered by dust, pollen, food, or medicines.
+
+Skin Rash: Redness, itching, bumps, irritation, dryness. May occur due to allergy, infection, heat, or eczema.
+
+Itching: Irritated skin, urge to scratch, redness, rash. Common causes include allergy, dry skin, fungal infection, or insect bite.
+
+Burning Urination: Pain or burning while passing urine, frequent urination, lower abdominal pain. Often due to urinary infection.
+
+Urinary Infection (UTI): Burning urination, frequent urge to urinate, cloudy urine, lower belly pain, fever. Needs medical advice.
+
+Chest Pain: Pressure, tightness, burning, sharp pain in chest. Can be due to acidity, muscle strain, or heart problems. Seek urgent help if severe.
+
+Breathing Difficulty: Shortness of breath, wheezing, chest tightness, fast breathing, anxiety. May be due to asthma, infection, allergy, or heart/lung problems.
+
+Asthma: Wheezing, cough, chest tightness, breathing difficulty, worse at night or with dust/exercise.
+
+Anxiety: Nervousness, fast heartbeat, sweating, chest tightness, restlessness, sleep trouble, overthinking.
+
+Stress: Irritability, headache, fatigue, sleep disturbance, body pain, poor concentration.
+
+Insomnia: Trouble falling asleep, waking often, tiredness in daytime, poor concentration, irritability.
+
+Diabetes Symptoms: Increased thirst, frequent urination, weight loss, tiredness, blurred vision, slow wound healing.
+
+High Blood Pressure Symptoms: Headache, dizziness, nosebleed, chest discomfort, often no symptoms. Regular BP checks are important.
+
+Low Blood Pressure: Dizziness, fainting, weakness, blurred vision, cold skin, nausea.
+
+Anemia: Weakness, pale skin, dizziness, shortness of breath, tiredness, fast heartbeat.
+
+Menstrual Cramps: Lower abdominal pain, back pain, nausea, tiredness during periods.
+
+Ear Pain: Earache, reduced hearing, fever, irritation, fluid discharge. May be due to infection or wax.
+
+Eye Irritation: Redness, watering, itching, burning, blurred vision. Can occur due to allergy, dust, infection, or dryness.
+"""
+
+def parse_symptoms(text):
+    symptoms = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.split(":", 1)
+        if len(parts) != 2:
+            continue
+        name = parts[0].strip()
+        description = parts[1].strip()
+        symptoms.append({"name": name, "description": description})
+    return symptoms
+
+def main():
+    symptoms = parse_symptoms(raw_text)
+    with open("symptoms.json", "w", encoding="utf-8") as f:
+        json.dump(symptoms, f, indent=2, ensure_ascii=False)
+    print(f"Wrote {len(symptoms)} symptom entries to symptoms.json")
+
+if __name__ == "__main__":
+    main()
